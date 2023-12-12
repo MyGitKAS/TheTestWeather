@@ -21,9 +21,15 @@ class MainViewController: UIViewController {
         setupView()
         setConstraints()
         setupChangeCityButton()
-        
+        setGradient()
     }
     
+    private func setGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor.cyan.cgColor,UIColor.systemPurple.cgColor, UIColor.blue.cgColor]
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
     
     private func setupView() {
         view.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
@@ -38,9 +44,15 @@ class MainViewController: UIViewController {
         changeCityButton.setTitleColor(.white, for: .normal)
         changeCityButton.layer.cornerRadius = 20
         changeCityButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2013747027)
-//        changeCityButton.addTarget(self, action: #selector(changeCityButtonTapped), for: .touchUpInside)
+        changeCityButton.addTarget(self, action: #selector(changeCityButtonTapped), for: .touchUpInside)
     }
 
+    
+    @objc func changeCityButtonTapped() {
+        let vc = ChangeCityViewController()
+        self.present(vc, animated: true)
+    }
+    
 }
 
 extension MainViewController: MainViewProtocol {
@@ -83,3 +95,5 @@ extension MainViewController {
         }
     }
 }
+
+

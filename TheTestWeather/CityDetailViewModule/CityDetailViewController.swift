@@ -11,7 +11,7 @@ class CityDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .magenta
     }
     
 

@@ -29,7 +29,7 @@ class WeekTableView: UIView {
         tableView.layer.cornerRadius = 20
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "WeekTableViewCell")
         tableView.isScrollEnabled = false
     }
 }
@@ -42,9 +42,16 @@ extension WeekTableView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! WeekTableViewCell
+        
+        let numberDay = 5
+        let indexCell = indexPath.row
+        var day = days[(numberDay + indexCell) % 7]
+        if indexCell == 0 {
+               day = "Cегодня"
+           }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
         cell.backgroundColor = UIColor.clear
-       // cell.dayLabel.text = days[indexPath.row]
+        cell.dayLabel.text = day
         return cell
     }
 
@@ -77,3 +84,21 @@ extension WeekTableView {
         }
     }
 }
+
+
+
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! WeekTableViewCell
+//        cell.backgroundColor = UIColor.clear
+//
+////        let days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"]
+////
+////        let numberDay = 5
+////        for index in numberDay...numberDay + 5 {
+////            let indexCell = 0
+////            let day = days[index % 7]
+////
+////            cell.dayLabel.text = day
+////        }
+////
+////
+////        return cell

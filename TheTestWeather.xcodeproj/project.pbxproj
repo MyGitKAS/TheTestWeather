@@ -25,6 +25,8 @@
 		3E435C232B2833EF00B83C3B /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E435C222B2833EF00B83C3B /* WeekTableViewCell.swift */; };
 		3E435C262B2838A500B83C3B /* CityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E435C252B2838A500B83C3B /* CityDetailViewController.swift */; };
 		3E435C292B2839E500B83C3B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3E435C282B2839E500B83C3B /* Alamofire */; };
+		3EC3A7FA2B2905300083BD8A /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3A7F92B2905300083BD8A /* UILabel+Extensions.swift */; };
+		3EC3A7FE2B29116C0083BD8A /* ChooseCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3A7FD2B29116C0083BD8A /* ChooseCityViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		3E435C202B28336A00B83C3B /* WeekTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableView.swift; sourceTree = "<group>"; };
 		3E435C222B2833EF00B83C3B /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		3E435C252B2838A500B83C3B /* CityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailViewController.swift; sourceTree = "<group>"; };
+		3EC3A7F92B2905300083BD8A /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
+		3EC3A7FD2B29116C0083BD8A /* ChooseCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCityViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 		3E435BE22B276BEB00B83C3B /* TheTestWeather */ = {
 			isa = PBXGroup;
 			children = (
+				3EC3A7FB2B2906880083BD8A /* ChooseCityModule */,
+				3EC3A7F82B2904D50083BD8A /* Extensions */,
 				3E435C242B28373B00B83C3B /* CityDetailViewModule */,
 				3E435C052B27984800B83C3B /* ServiceLayer */,
 				3E435C042B277E4500B83C3B /* ViewComponets */,
@@ -181,6 +187,30 @@
 			path = CityDetailViewModule;
 			sourceTree = "<group>";
 		};
+		3EC3A7F82B2904D50083BD8A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3EC3A7F92B2905300083BD8A /* UILabel+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3EC3A7FB2B2906880083BD8A /* ChooseCityModule */ = {
+			isa = PBXGroup;
+			children = (
+				3EC3A7FC2B2911300083BD8A /* Views */,
+			);
+			path = ChooseCityModule;
+			sourceTree = "<group>";
+		};
+		3EC3A7FC2B2911300083BD8A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3EC3A7FD2B29116C0083BD8A /* ChooseCityViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,10 +291,12 @@
 			files = (
 				3E435C092B27996900B83C3B /* Weather.swift in Sources */,
 				3E435C192B279E8800B83C3B /* DayCoruselView.swift in Sources */,
+				3EC3A7FE2B29116C0083BD8A /* ChooseCityViewController.swift in Sources */,
 				3E435BEE2B276BEB00B83C3B /* TheTestWeather.xcdatamodeld in Sources */,
 				3E435C232B2833EF00B83C3B /* WeekTableViewCell.swift in Sources */,
 				3E435C032B277B8A00B83C3B /* MainPresenter.swift in Sources */,
 				3E435C0C2B279A5800B83C3B /* CurrentWeatherView.swift in Sources */,
+				3EC3A7FA2B2905300083BD8A /* UILabel+Extensions.swift in Sources */,
 				3E435C212B28336B00B83C3B /* WeekTableView.swift in Sources */,
 				3E435BE82B276BEB00B83C3B /* MainViewController.swift in Sources */,
 				3E435BE42B276BEB00B83C3B /* AppDelegate.swift in Sources */,

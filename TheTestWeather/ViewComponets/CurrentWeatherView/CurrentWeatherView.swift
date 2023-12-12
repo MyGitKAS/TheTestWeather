@@ -28,13 +28,18 @@ class CurrentWeatherView: UIView {
     private func setupLabels() {
         localeLabel.text = "Minsk"
         localeLabel.font = UIFont.systemFont(ofSize: 30)
+        localeLabel.isWhite()
         
         currentTemperatureLabel.text = "-8°C"
         currentTemperatureLabel.font = UIFont.systemFont(ofSize: 50)
+        currentTemperatureLabel.isWhite()
         
         weatherLabel.text = "Wind§"
         weatherLabel.font = UIFont.systemFont(ofSize: 25)
+        weatherLabel.isWhite()
+        
         maxMinTempLabel.text = "max: -3°C :: min: -10°C"
+        maxMinTempLabel.isWhite()
         
         localeLabel.textAlignment = .center
         currentTemperatureLabel.textAlignment = .center
