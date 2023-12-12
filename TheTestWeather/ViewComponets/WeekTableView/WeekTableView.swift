@@ -44,6 +44,7 @@ extension WeekTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! WeekTableViewCell
         cell.backgroundColor = UIColor.clear
+       // cell.dayLabel.text = days[indexPath.row]
         return cell
     }
 

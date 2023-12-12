@@ -66,16 +66,16 @@ extension MainViewController {
             make.width.equalTo(150)
             make.height.equalTo(40)
             make.centerX.equalToSuperview()
-            make.top.equalTo(currentWeather.snp_bottomMargin).offset(10)
+            make.top.equalTo(currentWeather.snp_bottomMargin).offset(20)
         }
         dayCorusel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(changeCityButton.snp_bottomMargin).offset(80)
+            make.top.equalTo(changeCityButton.snp_bottomMargin).offset(50)
             make.height.equalTo(130)
             make.width.equalTo(350)
         }
         weekTable.snp.makeConstraints { make in
-            make.top.equalTo(dayCorusel.snp.bottom).offset(10)
+            make.top.equalTo(dayCorusel.snp.bottom).offset(20)
             make.width.equalTo(350)
             make.height.equalTo(330)
             make.centerX.equalToSuperview()
