@@ -7,13 +7,13 @@
 import UIKit
 
 protocol ViewComponentProtocol: UIView {
-     
-    func setData(data: Weather)
+    func reloadData(data: Weather)
 }
 
 protocol MainViewProtocol: AnyObject {
-    func succes(getWeather: Weather)
-    func failure(error: Error)
+    func success(dataWeather: Weather)
+    func failure()
+   // func failure(error: Error)
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
@@ -26,37 +26,40 @@ protocol MainViewPresenterProtocol: AnyObject {
 class MainPresenter: MainViewPresenterProtocol {
     
     let view: MainViewProtocol!
-    let networkServise: NetworkServiceProtocol!
+    let networkService: NetworkServiceProtocol!
     var weater: Weather?
-    
     
     required init(view: MainViewProtocol, networkServise: NetworkServiceProtocol) {
         self.view = view
-        self.networkServise = networkServise
+        self.networkService = networkServise
+        
+        getWeather()
     }
     
     func getWeather() {
-        networkServise.parseWeather(city:"London" ) { weater in
-            if weater != nil {
-                print(weater?.location ?? "")
+        let city = InfoService.getLocation()
+        if InfoService.isInternetAvailable() {
+            networkService.parseWeather(city: city) { [self] weather in
+                if let dataWeather = weather {
+                    print("!1111111111")
+                    view.success(dataWeather: dataWeather)
+//                    DataStorageService.removeData(forKey: DataStorageService.userKey)
+//                    DataStorageService.saveData(try? JSONEncoder().encode(weatherData), forKey: DataStorageService.userKey)
+                } else  {
+                    view.failure()
+                }
             }
+        } else {
+//            if let data = DataStorageService.loadData(forKey: DataStorageService.userKey) as? Data,
+//                let weatherData = try? JSONDecoder().decode(Weather.self, from: data) {
+//
+//                view.success(getWeather: weatherData)
+//                } else {
+//                view.failure()
+//            }
+            
+            print("NoINTERNET")
         }
     }
-    
-    func locale() {
-        let currentLocale = NSLocale.current
-        let localeIdentifier = currentLocale.identifier
-        let languageCode = currentLocale.languageCode
-        let regionCode = currentLocale.regionCode
-        let city = currentLocale.localizedString(forRegionCode: regionCode ?? "")
-        
-        print(city)
-        print("Locale Identifier: \(localeIdentifier)")
-        print("Language Code: \(languageCode ?? "")")
-        print("Region Code: \(regionCode ?? "")")
-    }
-    
-
-
 }
 

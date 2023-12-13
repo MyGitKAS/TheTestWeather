@@ -9,9 +9,10 @@ import UIKit
 import SnapKit
 
 class HourCell: UICollectionViewCell {
-    let hourLabel = UILabel()
-    let weatherImage = UILabel()
-    let tempLabel = UILabel()
+    var hourLabel = UILabel()
+    //var weatherImage = UILabel()
+    var weatherImage = UIImageView()
+    var tempLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +29,7 @@ class HourCell: UICollectionViewCell {
         hourLabel.text = " 22"
         addSubview(hourLabel)
        
-        weatherImage.text = " ☁️"
+        //weatherImage.text = " ☁️"
         addSubview(weatherImage)
         
         tempLabel.text = "-8°"
@@ -41,13 +42,14 @@ extension HourCell {
     private func setConstraints() {
         hourLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self)
-            make.top.equalTo(self.snp_topMargin)
+            make.top.equalTo(self.snp.top)
             }
               
         weatherImage.snp.makeConstraints { make in
             make.centerX.equalTo(self)
+            make.height.width.equalTo(50)
             make.top.equalTo(hourLabel.snp_bottomMargin).offset(10)
-            }
+        }
         
         tempLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self)

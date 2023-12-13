@@ -26,19 +26,22 @@ class CurrentWeatherView: UIView {
     }
 
     private func setupLabels() {
-        localeLabel.text = "Minsk"
+        localeLabel.text = "---------"
         localeLabel.font = UIFont.systemFont(ofSize: 30)
         localeLabel.isWhite()
         
-        currentTemperatureLabel.text = "-8°C"
-        currentTemperatureLabel.font = UIFont.systemFont(ofSize: 50)
+        currentTemperatureLabel.text = "----"
+        currentTemperatureLabel.font = UIFont.systemFont(ofSize: 60)
         currentTemperatureLabel.isWhite()
         
-        weatherLabel.text = "Wind§"
+        //weatherLabel.text = "Wind"
+        weatherLabel.text = "-----"
         weatherLabel.font = UIFont.systemFont(ofSize: 25)
         weatherLabel.isWhite()
         
-        maxMinTempLabel.text = "max: -3°C :: min: -10°C"
+        //maxMinTempLabel.text = "max: -3°C | min: -10°C"
+        
+        maxMinTempLabel.text = "-----  -----"
         maxMinTempLabel.isWhite()
         
         localeLabel.textAlignment = .center
@@ -54,8 +57,13 @@ class CurrentWeatherView: UIView {
 }
 
 extension CurrentWeatherView: ViewComponentProtocol {
-    func setData(data: Weather) {
-        //
+    func reloadData(data: Weather) {
+        localeLabel.text = data.location.name
+        currentTemperatureLabel.text = "\(data.current.tempC)°C"
+        weatherLabel.text = data.current.condition.text
+        //maxMinTempLabel.text = "max: -3°C | min: -10°C"
+        let day = data.forecast.forecastday[0].day
+        maxMinTempLabel.text = "max: \(day.maxtempC) | min: \(day.mintempC)"
     }
 }
 

@@ -37,7 +37,7 @@ class ChangeCityViewController: UIViewController{
     
     private func setupTableView() {
         tableView.frame = CGRect(x: 0, y: 249, width: view.frame.width, height: view.frame.height - 50)
-        tableView.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        tableView.backgroundColor = #colorLiteral(red: 0.3608969322, green: 0.6447784096, blue: 0.9686274529, alpha: 1)
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
@@ -49,7 +49,7 @@ class ChangeCityViewController: UIViewController{
         searchBar.placeholder = "Enter city"
         searchBar.isTranslucent = false
         searchBar.searchTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2975988064)
-        searchBar.barTintColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        searchBar.barTintColor = #colorLiteral(red: 0.3608969322, green: 0.6447784096, blue: 0.9686274529, alpha: 1)
         searchBar.delegate = self
         searchBar.backgroundColor = .green
         searchBar.delegate = self

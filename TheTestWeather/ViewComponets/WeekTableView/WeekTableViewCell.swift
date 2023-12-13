@@ -11,9 +11,9 @@ import SnapKit
 class WeekTableViewCell: UITableViewCell {
     
     var dayLabel = UILabel()
-    let tempMaxLabel = UILabel()
-    let tempMinLabel = UILabel()
-    let weatherImageView = UIImageView()
+    var tempMaxLabel = UILabel()
+    var tempMinLabel = UILabel()
+    var weatherImageView = UIImageView()
     let progressView = UIProgressView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -11,7 +11,8 @@ import SnapKit
 class WeekTableView: UIView {
     
     let tableView = UITableView()
-    let days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"]
+    private  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    private var weather: Weather?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,23 +37,32 @@ class WeekTableView: UIView {
 
 extension WeekTableView: UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return days.count + 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let numberDay = 5
+        let numberDay = InfoService.getNumberDayWeek()
         let indexCell = indexPath.row
-        var day = days[(numberDay + indexCell) % 7]
+        var dayWeek = days[(numberDay + indexCell) % 7]
         if indexCell == 0 {
-               day = "Cегодня"
+            dayWeek = "Cегодня"
            }
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
         cell.backgroundColor = UIColor.clear
-        cell.dayLabel.text = day
+        cell.dayLabel.text = dayWeek
+        let day = weather?.forecast.forecastday[indexPath.row].day
+        let mintemp = day?.mintempC ?? 0.0
+        let maxtemp = day?.maxtempC ?? 0.0
+        
+        
+        cell.tempMinLabel.text = String(mintemp)
+        cell.tempMaxLabel.text = String(maxtemp)
+        cell.dayLabel.text = dayWeek
         return cell
+        
+        
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -72,8 +82,9 @@ extension WeekTableView: UITableViewDelegate {
 }
 
 extension WeekTableView: ViewComponentProtocol {
-    func setData(data: Weather) {
-        //
+    func reloadData(data: Weather) {
+       weather = data
+       tableView.reloadData()
     }
 }
 

@@ -27,7 +27,9 @@ class MainViewController: UIViewController {
     private func setGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor.cyan.cgColor,UIColor.systemPurple.cgColor, UIColor.blue.cgColor]
+        gradientLayer.colors = [ UIColor.cyan.cgColor,
+                                UIColor.systemPurple.cgColor,
+                                UIColor.blue.cgColor]
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
@@ -37,6 +39,8 @@ class MainViewController: UIViewController {
         view.addSubview(changeCityButton)
         view.addSubview(dayCorusel)
         view.addSubview(weekTable)
+        
+     
     }
     
     private func setupChangeCityButton() {
@@ -57,11 +61,13 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewProtocol {
     
-    func succes(getWeather: Weather) {
-        //
+    func success(dataWeather: Weather) {
+        currentWeather.reloadData(data: dataWeather)
+        dayCorusel.reloadData(data: dataWeather)
+        weekTable.reloadData(data: dataWeather)
     }
     
-    func failure(error: Error) {
+    func failure() {
         //
     }
 

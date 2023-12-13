@@ -15,8 +15,8 @@ protocol NetworkServiceProtocol {
 class WeatherAPINetworkService: NetworkServiceProtocol {
 
         func parseWeather(city: String, completion: @escaping (Weather?) -> Void) {
-
-            let url = "https://api.weatherapi.com/v1/forecast.json?key=cbd221c15409491b8e8164754231012&q=\(city)"
+            
+              let url = "https://api.weatherapi.com/v1/forecast.json?key=cbd221c15409491b8e8164754231012&q=\(city)&days=10"
 
             AF.request(url).responseDecodable(of: Weather.self) { response in
             switch response.result {
