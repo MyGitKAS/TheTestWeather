@@ -40,7 +40,7 @@ final class ChooseCityViewController: UIViewController {
     }
     
     private func setupTableView() {
-        tableView.frame = CGRect(x: 0, y: 249, width: view.frame.width, height: view.frame.height - 50)
+        tableView.frame = CGRect(x: 0, y: 249, width: view.frame.width, height: view.frame.height - 249)
         tableView.backgroundColor = #colorLiteral(red: 0.3608969322, green: 0.6447784096, blue: 0.9686274529, alpha: 1)
         tableView.delegate = self
         tableView.dataSource = self

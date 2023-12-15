@@ -58,7 +58,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: MainViewProtocol {
     
     func presenVC(vc: UIViewController) {
-        present(vc, animated: true)
+         present(vc, animated: true)
     }
     
     func success(dataWeather: Weather?) {
