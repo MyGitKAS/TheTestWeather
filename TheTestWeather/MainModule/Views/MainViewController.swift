@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
 
     var presenter: MainViewPresenterProtocol!
     var currentWeather: ViewComponentProtocol!
@@ -39,8 +39,6 @@ class MainViewController: UIViewController {
         view.addSubview(changeCityButton)
         view.addSubview(dayCorusel)
         view.addSubview(weekTable)
-        
-     
     }
     
     private func setupChangeCityButton() {
@@ -51,26 +49,27 @@ class MainViewController: UIViewController {
         changeCityButton.addTarget(self, action: #selector(changeCityButtonTapped), for: .touchUpInside)
     }
 
-    
     @objc func changeCityButtonTapped() {
-        let vc = ChangeCityViewController()
-        self.present(vc, animated: true)
+        presenter.changeCityButtonTapped()
     }
     
 }
 
 extension MainViewController: MainViewProtocol {
     
-    func success(dataWeather: Weather) {
+    func presenVC(vc: UIViewController) {
+        present(vc, animated: true)
+    }
+    
+    func success(dataWeather: Weather?) {
         currentWeather.reloadData(data: dataWeather)
         dayCorusel.reloadData(data: dataWeather)
         weekTable.reloadData(data: dataWeather)
     }
     
     func failure() {
-        //
+        
     }
-
 }
 
 extension MainViewController {

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class WeekTableViewCell: UITableViewCell {
+final class WeekTableViewCell: UITableViewCell {
     
     var dayLabel = UILabel()
     var tempMaxLabel = UILabel()
@@ -18,7 +18,6 @@ class WeekTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         progressView.trackTintColor = .green
         setupLabels()
         setConstraints()
@@ -35,13 +34,10 @@ class WeekTableViewCell: UITableViewCell {
         addSubview(weatherImageView)
         addSubview(progressView)
         
-        dayLabel.text = "Day Week"
-        weatherImageView.image = UIImage(named: "clouds")
-        tempMaxLabel.text = "-5"
-        tempMinLabel.text = "-9"
-        
+        tempMaxLabel.isWhite()
+        tempMinLabel.isWhite()
+        dayLabel.isWhite()
     }
-    
 }
    
 extension WeekTableViewCell {
@@ -53,7 +49,8 @@ extension WeekTableViewCell {
 
             weatherImageView.snp.makeConstraints { make in
                 make.centerY.equalTo(self)
-                make.trailing.equalTo(tempMinLabel.snp.leading).offset(-10)
+                make.height.width.equalTo(40)
+                make.trailing.equalTo(progressView.snp.leading).offset(-60)
             }
         
             tempMinLabel.snp.makeConstraints { make in
@@ -63,7 +60,7 @@ extension WeekTableViewCell {
         
             progressView.snp.makeConstraints { make in
                 make.centerY.equalTo(self)
-                make.trailing.equalTo(tempMaxLabel.snp.leading).offset(-15)
+                make.trailing.equalTo(self.snp.trailing).offset(-65)
                 make.width.equalTo(70)
     
             }

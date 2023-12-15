@@ -7,10 +7,9 @@
 
 import UIKit
 
-class DayCoruselView: UIView {
+final class DayCoruselView: UIView {
   
-    var collectionView: UICollectionView!
-    
+    private var collectionView: UICollectionView!
     private var weather: Weather?
 
     override init(frame: CGRect) {
@@ -36,16 +35,6 @@ class DayCoruselView: UIView {
         collectionView.layer.cornerRadius = 20
         addSubview(collectionView)
     }
-    
-    private func stringToImage(str: String) -> UIImage? {
-       let stringUrl = "https:" + str
-        guard let url = URL(string: stringUrl),
-              let data = try? Data(contentsOf: url),
-              let image = UIImage(data: data) else {
-            return nil
-        }
-        return image
-    }
 }
 
 extension DayCoruselView: UICollectionViewDelegateFlowLayout {
@@ -60,9 +49,7 @@ extension DayCoruselView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension DayCoruselView: UICollectionViewDelegate {
-    
-}
+extension DayCoruselView: UICollectionViewDelegate {}
 
 extension DayCoruselView: UICollectionViewDataSource {
     
@@ -75,30 +62,31 @@ extension DayCoruselView: UICollectionViewDataSource {
         let dataHour = weather?.forecast.forecastday.first?.hour[indexPath.row]
         var hour = dataHour?.time ?? "--"
         let iconUrl = dataHour?.condition.icon ?? ""
-        let icon = stringToImage(str: iconUrl) ?? UIImage(named: "clouds")
+        let icon = Service.stringToImage(str: iconUrl) ?? UIImage(named: "naicon")
+        
         if hour != "--" {
             let components = hour.components(separatedBy: " ")
             let timeComponent = components[1].components(separatedBy: ":")
-            hour = timeComponent[0]
+            let futureTime = InfoService.calculateTime(hours: Int(timeComponent[0]) ?? 00)
+            hour = String(futureTime)
         }
+        
         let temperature = dataHour?.tempC ?? 0.0
         
         if indexPath.row == 0 {
             hour = "Now"
         }
         cell.hourLabel.text = hour
-        cell.tempLabel.text = String(temperature)
+        cell.tempLabel.text = String(temperature.toInt()) + "°"
         cell.weatherImage.image = icon
         return cell
     }
-    
 }
 
 extension DayCoruselView: ViewComponentProtocol {
-    func reloadData(data: Weather) {
+    func reloadData(data: Weather?) {
         self.weather = data
         collectionView.reloadData()
-      
     }
 }
 

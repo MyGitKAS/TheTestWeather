@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class WeekTableView: UIView {
+final class WeekTableView: UIView {
     
-    let tableView = UITableView()
+    private let tableView = UITableView()
     private  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     private var weather: Weather?
 
@@ -32,6 +32,23 @@ class WeekTableView: UIView {
         tableView.delegate = self
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "WeekTableViewCell")
         tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
+    }
+    
+    private func minMaxWeekTemp() -> (Double, Double) {
+        guard let week = weather?.forecast.forecastday else { return (0,0)}
+        var min: Double = 0
+        var max: Double = 0
+        
+        for day in week {
+            if day.day.maxtempC > max {
+                max = day.day.maxtempC
+            }
+            if day.day.mintempC < min {
+                 min = day.day.mintempC
+            }
+        }
+        return (max,min)
     }
 }
 
@@ -41,32 +58,40 @@ extension WeekTableView: UITableViewDataSource {
         return days.count + 1
     }
 
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        if let textlabel = header.textLabel {
+            textlabel.font = textlabel.font.withSize(15)
+            textlabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let numberDay = InfoService.getNumberDayWeek()
         let indexCell = indexPath.row
         var dayWeek = days[(numberDay + indexCell) % 7]
         if indexCell == 0 {
-            dayWeek = "Cегодня"
+            dayWeek = "Today"
            }
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
+        let day = weather?.forecast.forecastday[indexPath.row].day
+        let minTempDay = day?.mintempC ?? 0.0
+        let maxTempDay = day?.maxtempC ?? 0.0
+        let iconUrl = day?.condition.icon ?? ""
+        let icon = Service.stringToImage(str: iconUrl) ?? UIImage(named: "naicon")
+        
+        cell.progressView.setProgress(abs(Float(maxTempDay + minTempDay)) / 100, animated: true)
         cell.backgroundColor = UIColor.clear
         cell.dayLabel.text = dayWeek
-        let day = weather?.forecast.forecastday[indexPath.row].day
-        let mintemp = day?.mintempC ?? 0.0
-        let maxtemp = day?.maxtempC ?? 0.0
-        
-        
-        cell.tempMinLabel.text = String(mintemp)
-        cell.tempMaxLabel.text = String(maxtemp)
+        cell.weatherImageView.image = icon
+        cell.tempMinLabel.text = String(minTempDay.toInt()) + "°"
+        cell.tempMaxLabel.text = String(maxTempDay.toInt()) + "°"
         cell.dayLabel.text = dayWeek
         return cell
-        
-        
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Weekly Weather Here"
+        "Weekly Weather"
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -78,38 +103,20 @@ extension WeekTableView: UITableViewDataSource {
     }
 }
 
-extension WeekTableView: UITableViewDelegate {
-}
+extension WeekTableView: UITableViewDelegate {}
 
 extension WeekTableView: ViewComponentProtocol {
-    func reloadData(data: Weather) {
+    func reloadData(data: Weather?) {
        weather = data
        tableView.reloadData()
     }
 }
 
 extension WeekTableView {
- private func setConstraints() {
+    private func setConstraints() {
         tableView.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalTo(self)
         }
     }
 }
 
-
-
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! WeekTableViewCell
-//        cell.backgroundColor = UIColor.clear
-//
-////        let days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"]
-////
-////        let numberDay = 5
-////        for index in numberDay...numberDay + 5 {
-////            let indexCell = 0
-////            let day = days[index % 7]
-////
-////            cell.dayLabel.text = day
-////        }
-////
-////
-////        return cell

@@ -9,15 +9,18 @@ import Foundation
 import Alamofire
 
 protocol NetworkServiceProtocol {
-       func parseWeather(city: String, completion: @escaping (Weather?) -> Void)
+       func parseWeather(city: String, days:Int, completion: @escaping (Weather?) -> Void)
 }
 
-class WeatherAPINetworkService: NetworkServiceProtocol {
-
-        func parseWeather(city: String, completion: @escaping (Weather?) -> Void) {
+final class WeatherAPINetworkService: NetworkServiceProtocol {
+    
+    private let apiKey = "cbd221c15409491b8e8164754231012"
+    private let baseURL = "https://api.weatherapi.com/v1/forecast.json?key="
+    
+    func parseWeather(city: String, days: Int = 10, completion: @escaping (Weather?) -> Void) {
             
-              let url = "https://api.weatherapi.com/v1/forecast.json?key=cbd221c15409491b8e8164754231012&q=\(city)&days=10"
-
+            let url = baseURL + apiKey + "&q=\(city)&days=\(days)"
+        
             AF.request(url).responseDecodable(of: Weather.self) { response in
             switch response.result {
             case .success(let weatherResponse):

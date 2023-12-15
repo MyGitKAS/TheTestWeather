@@ -7,58 +7,94 @@
 import UIKit
 
 protocol ViewComponentProtocol: UIView {
-    func reloadData(data: Weather)
+    func reloadData(data: Weather?)
 }
 
 protocol MainViewProtocol: AnyObject {
-    func success(dataWeather: Weather)
+    func success(dataWeather: Weather?)
     func failure()
-   // func failure(error: Error)
+    func presenVC(vc: UIViewController)
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
-    init(view: MainViewProtocol, networkServise: NetworkServiceProtocol)
+    init(view: MainViewProtocol,
+         chooseCityVC: ChooseCityViewController,
+         networkServise: NetworkServiceProtocol,
+         cityDetailVC: CityDetailViewProtocol
+    )
     func getWeather()
     var weater: Weather? { get }
+    func changeCityButtonTapped()
+    func citySelected(city: String)
    
 }
 
-class MainPresenter: MainViewPresenterProtocol {
+final class MainPresenter: MainViewPresenterProtocol {
+        
+    private let view: MainViewProtocol!
+    private let networkService: NetworkServiceProtocol!
+    internal var weater: Weather?
+    private let chooseCityVC: ChooseCityViewController!
+    private let cityDetailVC : CityDetailViewProtocol!
     
-    let view: MainViewProtocol!
-    let networkService: NetworkServiceProtocol!
-    var weater: Weather?
-    
-    required init(view: MainViewProtocol, networkServise: NetworkServiceProtocol) {
+    required init(view: MainViewProtocol,
+                  chooseCityVC: ChooseCityViewController,
+                  networkServise: NetworkServiceProtocol,
+                  cityDetailVC: CityDetailViewProtocol) {
         self.view = view
         self.networkService = networkServise
-        
+        self.chooseCityVC = chooseCityVC
+        self.cityDetailVC = cityDetailVC
         getWeather()
+    }
+    
+    func changeCityButtonTapped() {
+        view.presenVC(vc: chooseCityVC)
+    }
+    
+    func citySelected(city: String) {
+        chooseCityVC.closeSelf()
+        let vc = cityDetailVC
+        getOneCity(city: city)
+        view.presenVC(vc: vc as! UIViewController)
+    }
+    
+    func getOneCity(city: String) {
+        if InfoService.isInternetAvailable() {
+            networkService.parseWeather(city: city, days: 1) { [self] weather in
+                if let dataWeather = weather {
+                    cityDetailVC.reloadData(weatherData: dataWeather)
+                } else  {
+                    
+                }
+            }
+            
+        } else {
+            print("No internet")
+        }
     }
     
     func getWeather() {
         let city = InfoService.getLocation()
+        
         if InfoService.isInternetAvailable() {
-            networkService.parseWeather(city: city) { [self] weather in
+            networkService.parseWeather(city: city, days: 10) { [self] weather in
                 if let dataWeather = weather {
-                    print("!1111111111")
+                    DataStorageService.shared.removeData(with: DataStorageService.userKey)
                     view.success(dataWeather: dataWeather)
-//                    DataStorageService.removeData(forKey: DataStorageService.userKey)
-//                    DataStorageService.saveData(try? JSONEncoder().encode(weatherData), forKey: DataStorageService.userKey)
-                } else  {
+                    DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)
+                } else {
                     view.failure()
                 }
             }
         } else {
-//            if let data = DataStorageService.loadData(forKey: DataStorageService.userKey) as? Data,
-//                let weatherData = try? JSONDecoder().decode(Weather.self, from: data) {
-//
-//                view.success(getWeather: weatherData)
-//                } else {
-//                view.failure()
-//            }
-            
-            print("NoINTERNET")
+            DataStorageService.shared.loadData(with: DataStorageService.userKey) { [self] weather in
+                if let loadedWeather = weather {
+                    view.success(dataWeather: loadedWeather)
+                } else {
+                    print("Failed to load data")
+                }
+            }
         }
     }
 }

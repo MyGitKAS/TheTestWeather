@@ -7,10 +7,14 @@
 
 import UIKit
 
-class ChangeCityViewController: UIViewController{
+protocol ChooseCityViewProtocol: AnyObject {
+    func closeSelf()
+}
 
-    let searchBar = UISearchBar()
-    let tableView = UITableView()
+final class ChooseCityViewController: UIViewController {
+    var presenter: MainViewPresenterProtocol!
+    private let searchBar = UISearchBar()
+    private let tableView = UITableView()
     private let buttonEmpty = UIButton()
     private var isSearching = false
 
@@ -60,7 +64,7 @@ class ChangeCityViewController: UIViewController{
     }
 }
 
-extension ChangeCityViewController: UISearchBarDelegate {
+extension ChooseCityViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         self.filteredCityArray.removeAll()
@@ -90,7 +94,7 @@ extension ChangeCityViewController: UISearchBarDelegate {
           }
       }
 
-extension ChangeCityViewController: UITableViewDelegate, UITableViewDataSource {
+extension ChooseCityViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
@@ -113,9 +117,15 @@ extension ChangeCityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = CityDetailViewController()
-        self.present(vc, animated: true)
-        //self.dismiss(animated: false)
+          let selectedCell = tableView.cellForRow(at: indexPath)
+          if let cityName = selectedCell?.textLabel?.text {
+              presenter.citySelected(city: cityName)
+          }
     }
-    
+}
+
+extension ChooseCityViewController: ChooseCityViewProtocol {
+    func closeSelf() {
+        self.dismiss(animated: false, completion: nil)
+    }
 }

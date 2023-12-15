@@ -7,26 +7,38 @@
 
 import UIKit
 
-class DataStorageService {
+final class DataStorageService {
     
-    static let userKey = "User000"
+    static let shared = DataStorageService()
+    private let userDefaults = UserDefaults.standard
+    static let userKey = "User01"
     
-    static func saveData(_ data: Any, forKey key: String) {
-        UserDefaults.standard.set(data, forKey: key)
+    private init() {}
+    
+    func saveData(with key: String, value: Weather) {
+        if let encoded = try? JSONEncoder().encode(value) {
+            userDefaults.set(encoded, forKey: key)
+        }
+         userDefaults.synchronize()
     }
     
-    static func loadData(forKey key: String) -> Any? {
-        return UserDefaults.standard.object(forKey: key)
+    func loadData(with key: String, completion: @escaping (Weather?) -> Void) {
+        DispatchQueue.global().async {
+            if let data = self.userDefaults.object(forKey: key) as? Data,
+               let weather = try? JSONDecoder().decode(Weather.self, from: data) {
+                DispatchQueue.main.async {
+                    completion(weather)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
     }
     
-    static func removeData(forKey key: String) {
-        UserDefaults.standard.removeObject(forKey: key)
+    func removeData(with key: String) {
+        userDefaults.removeObject(forKey: key)
+        userDefaults.synchronize()
     }
-    
-    static func hasData(forKey key: String) -> Bool {
-           return UserDefaults.standard.object(forKey: key) != nil
-       }
 }
-
-
-

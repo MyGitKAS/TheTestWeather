@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CurrentWeatherView: UIView {
+final class CurrentWeatherView: UIView {
 
     let localeLabel = UILabel()
     let currentTemperatureLabel = UILabel()
@@ -31,15 +31,12 @@ class CurrentWeatherView: UIView {
         localeLabel.isWhite()
         
         currentTemperatureLabel.text = "----"
-        currentTemperatureLabel.font = UIFont.systemFont(ofSize: 60)
+        currentTemperatureLabel.font = UIFont.systemFont(ofSize: 55)
         currentTemperatureLabel.isWhite()
         
-        //weatherLabel.text = "Wind"
         weatherLabel.text = "-----"
         weatherLabel.font = UIFont.systemFont(ofSize: 25)
         weatherLabel.isWhite()
-        
-        //maxMinTempLabel.text = "max: -3°C | min: -10°C"
         
         maxMinTempLabel.text = "-----  -----"
         maxMinTempLabel.isWhite()
@@ -57,13 +54,13 @@ class CurrentWeatherView: UIView {
 }
 
 extension CurrentWeatherView: ViewComponentProtocol {
-    func reloadData(data: Weather) {
+    func reloadData(data: Weather?) {
+        guard let data = data else { return }
         localeLabel.text = data.location.name
-        currentTemperatureLabel.text = "\(data.current.tempC)°C"
+        currentTemperatureLabel.text = "\(data.current.tempC.toInt())°"
         weatherLabel.text = data.current.condition.text
-        //maxMinTempLabel.text = "max: -3°C | min: -10°C"
         let day = data.forecast.forecastday[0].day
-        maxMinTempLabel.text = "max: \(day.maxtempC) | min: \(day.mintempC)"
+        maxMinTempLabel.text = "max: \(day.maxtempC.toInt()) | min: \(day.mintempC.toInt())"
     }
 }
 

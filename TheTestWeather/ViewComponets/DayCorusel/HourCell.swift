@@ -8,9 +8,8 @@
 import UIKit
 import SnapKit
 
-class HourCell: UICollectionViewCell {
+final class HourCell: UICollectionViewCell {
     var hourLabel = UILabel()
-    //var weatherImage = UILabel()
     var weatherImage = UIImageView()
     var tempLabel = UILabel()
     
@@ -25,16 +24,13 @@ class HourCell: UICollectionViewCell {
     }
     
     private func setupLabels() {
-      
-        hourLabel.text = " 22"
         addSubview(hourLabel)
-       
-        //weatherImage.text = " ☁️"
         addSubview(weatherImage)
-        
-        tempLabel.text = "-8°"
-        tempLabel.font = UIFont.systemFont(ofSize: 20)
         addSubview(tempLabel)
+        
+        tempLabel.font = UIFont.systemFont(ofSize: 20)
+        tempLabel.isWhite()
+        hourLabel.isWhite()
     }
 }
 
@@ -47,7 +43,7 @@ extension HourCell {
               
         weatherImage.snp.makeConstraints { make in
             make.centerX.equalTo(self)
-            make.height.width.equalTo(50)
+            make.height.width.equalTo(45)
             make.top.equalTo(hourLabel.snp_bottomMargin).offset(10)
         }
         
