@@ -27,11 +27,11 @@ final class CurrentWeatherView: UIView {
 
     private func setupLabels() {
         localeLabel.text = "---------"
-        localeLabel.font = UIFont.systemFont(ofSize: 30)
+        localeLabel.font = UIFont.systemFont(ofSize: 35)
         localeLabel.isWhite()
         
         currentTemperatureLabel.text = "----"
-        currentTemperatureLabel.font = UIFont.systemFont(ofSize: 55)
+        currentTemperatureLabel.font = UIFont.systemFont(ofSize: 80)
         currentTemperatureLabel.isWhite()
         
         weatherLabel.text = "-----"
@@ -60,7 +60,7 @@ extension CurrentWeatherView: ViewComponentProtocol {
         currentTemperatureLabel.text = "\(data.current.tempC.toInt())°"
         weatherLabel.text = data.current.condition.text
         let day = data.forecast.forecastday[0].day
-        maxMinTempLabel.text = "max: \(day.maxtempC.toInt()) | min: \(day.mintempC.toInt())"
+        maxMinTempLabel.text = "Max.: \(day.maxtempC.toInt())° | Min.: \(day.mintempC.toInt())°"
     }
 }
 
@@ -83,12 +83,12 @@ extension CurrentWeatherView {
 
         weatherLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(currentTemperatureLabel.snp_bottomMargin).offset(10)
+            make.top.equalTo(currentTemperatureLabel.snp_bottomMargin).offset(5)
             }
 
         maxMinTempLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(weatherLabel.snp_bottomMargin).offset(20)
+            make.top.equalTo(weatherLabel.snp_bottomMargin).offset(10)
             }
     }
 }
