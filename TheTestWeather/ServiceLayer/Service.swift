@@ -17,6 +17,31 @@ final class Service {
         }
         return image
     }
+    
+  static func calculateDataAge(from dateString: String) -> String {
+        let dateFormat = "yyyy-MM-dd HH:mm"
+        let currentDate = Date()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        guard let inputDate = dateFormatter.date(from: dateString) else {
+            return "No date"
+        }
+        let calendar = Calendar.current
+        
+        let components = calendar.dateComponents([.minute, .hour, .day], from: inputDate, to: currentDate)
+      
+        if let days = components.day, days > 0 {
+            return "\(days) days"
+        }
+        if let hours = components.hour, hours < 24 && hours > 0 {
+            return "\(hours) hours ago"
+        }
+        if let minutes = components.minute, minutes < 60 {
+            return "\(minutes) min ago"
+        }
+        return "Unknow"
+    }
 }
 
 

@@ -14,7 +14,7 @@ final class CurrentWeatherView: UIView {
     let currentTemperatureLabel = UILabel()
     let weatherLabel = UILabel()
     let maxMinTempLabel = UILabel()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLabels()
@@ -59,14 +59,16 @@ extension CurrentWeatherView: ViewComponentProtocol {
         guard let data = data else { return }
         localeLabel.text = data.location.name
         weatherLabel.text = data.current.condition.text
+        let maxText = NSLocalizedString("max_label", comment: "")
+        let minText = NSLocalizedString("min_label", comment: "")
         if locale == "ru" {
             currentTemperatureLabel.text = "\(data.current.tempC.toInt())°C"
             let day = data.forecast.forecastday[0].day
-            maxMinTempLabel.text = "Max.: \(day.maxtempC.toInt())° | Min.: \(day.mintempC.toInt())°"
+            maxMinTempLabel.text = "\(maxText).: \(day.maxtempC.toInt())° | \(minText).: \(day.mintempC.toInt())°"
         } else {
             currentTemperatureLabel.text = "\(data.current.tempF.toInt())°F"
             let day = data.forecast.forecastday[0].day
-            maxMinTempLabel.text = "Max.: \(day.maxtempF.toInt())° | Min.: \(day.mintempF.toInt())°"
+            maxMinTempLabel.text = "\(maxText).: \(day.maxtempF.toInt())° | \(minText).: \(day.mintempF.toInt())°"
         }
     }
 }

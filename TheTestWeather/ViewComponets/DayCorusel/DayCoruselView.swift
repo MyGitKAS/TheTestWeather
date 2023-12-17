@@ -67,12 +67,12 @@ extension DayCoruselView: UICollectionViewDataSource {
         if hour != "--" {
             let components = hour.components(separatedBy: " ")
             let timeComponent = components[1].components(separatedBy: ":")
-            let futureTime = InfoService.calculateTime(hours: Int(timeComponent[0]) ?? 00)
+            let futureTime = InfoService.getHourSequence(from: Int(timeComponent[0]) ?? 00)
             hour = String(futureTime)
         }
         let temperature = locale == "ru" ? dataHour.tempC : dataHour.tempF
         if indexPath.row == 0 {
-            hour = "Now"
+            hour = NSLocalizedString("now_label", comment: "")
         }
         cell.hourLabel.text = hour
         cell.tempLabel.text = String(temperature.toInt()) + "°"

@@ -51,14 +51,12 @@ final class InfoService {
         }
         return (numbDay! - 2)
     }
-    
-    static func calculateTime(hours: Int) -> Int {
+
+    static func getHourSequence(from hours: Int) -> Int {
         let currentDate = Date()
         let calendar = Calendar.current
         let futureDate = calendar.date(byAdding: .hour, value: hours, to: currentDate)
-        
         let hour = calendar.component(.hour, from: futureDate!)
-        
         return hour
     }
     
@@ -69,4 +67,6 @@ final class InfoService {
         }
         return "en"
     }
+    
+    
 }

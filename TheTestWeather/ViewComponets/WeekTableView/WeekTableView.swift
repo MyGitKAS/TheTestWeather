@@ -11,9 +11,15 @@ import SnapKit
 final class WeekTableView: UIView {
     
     private let tableView = UITableView()
-    private  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     private var weather: Weather?
-
+    private  let days = [NSLocalizedString("day_mon", comment: ""),
+                         NSLocalizedString("day_tue", comment: ""),
+                         NSLocalizedString("day_wed", comment: ""),
+                         NSLocalizedString("day_thu", comment: ""),
+                         NSLocalizedString("day_fri", comment: ""),
+                         NSLocalizedString("day_sat", comment: ""),
+                         NSLocalizedString("day_sun", comment: "")]
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
@@ -75,7 +81,7 @@ extension WeekTableView: UITableViewDataSource {
         let indexCell = indexPath.row
         var dayWeek = days[(numberDay + indexCell) % 7]
         if indexCell == 0 {
-                 dayWeek = "Today"
+                 dayWeek = NSLocalizedString("today_label", comment: "")
                 }
         let locale = InfoService.getLanguage()
        
@@ -83,9 +89,9 @@ extension WeekTableView: UITableViewDataSource {
         let maxTempDay = locale == "ru" ? day.maxtempC : day.maxtempF
         let iconUrl = day.condition.icon
         let iconImage = Service.stringToImage(str: iconUrl)
-        //
-        cell.progressView.setProgress(abs(Float(maxTempDay + minTempDay)) / 100, animated: true)
-        //
+       
+        cell.progressView.setProgress(abs(Float(maxTempDay + minTempDay)) / 10, animated: true)
+       
         cell.dayLabel.text = dayWeek
         cell.weatherImageView.image = iconImage
         cell.tempMinLabel.text = String(minTempDay.toInt()) + "°"
@@ -94,7 +100,7 @@ extension WeekTableView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Weekly Weather"
+        NSLocalizedString("week_table_title", comment: "")
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

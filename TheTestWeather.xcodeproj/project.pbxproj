@@ -25,6 +25,7 @@
 		3E435C232B2833EF00B83C3B /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E435C222B2833EF00B83C3B /* WeekTableViewCell.swift */; };
 		3E435C262B2838A500B83C3B /* CityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E435C252B2838A500B83C3B /* CityDetailViewController.swift */; };
 		3E435C292B2839E500B83C3B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3E435C282B2839E500B83C3B /* Alamofire */; };
+		3E7CCAF72B2F7902008520B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E7CCAF92B2F7902008520B8 /* Localizable.strings */; };
 		3EC3A7FA2B2905300083BD8A /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3A7F92B2905300083BD8A /* UILabel+Extensions.swift */; };
 		3EC3A7FE2B29116C0083BD8A /* ChooseCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3A7FD2B29116C0083BD8A /* ChooseCityViewController.swift */; };
 		3EC3A8002B29A72A0083BD8A /* InfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3A7FF2B29A72A0083BD8A /* InfoService.swift */; };
@@ -52,6 +53,9 @@
 		3E435C202B28336A00B83C3B /* WeekTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableView.swift; sourceTree = "<group>"; };
 		3E435C222B2833EF00B83C3B /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		3E435C252B2838A500B83C3B /* CityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailViewController.swift; sourceTree = "<group>"; };
+		3E7CCAF42B2F7430008520B8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3E7CCAF82B2F7902008520B8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E7CCAFA2B2F7905008520B8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3EC3A7F92B2905300083BD8A /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		3EC3A7FD2B29116C0083BD8A /* ChooseCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCityViewController.swift; sourceTree = "<group>"; };
 		3EC3A7FF2B29A72A0083BD8A /* InfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoService.swift; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 				3E435BF12B276BF100B83C3B /* LaunchScreen.storyboard */,
 				3E435BF42B276BF100B83C3B /* Info.plist */,
 				3E435BEC2B276BEB00B83C3B /* TheTestWeather.xcdatamodeld */,
+				3E7CCAF92B2F7902008520B8 /* Localizable.strings */,
 			);
 			path = TheTestWeather;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 3E435BD72B276BEA00B83C3B;
 			packageReferences = (
@@ -290,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E435BF32B276BF100B83C3B /* LaunchScreen.storyboard in Resources */,
+				3E7CCAF72B2F7902008520B8 /* Localizable.strings in Resources */,
 				3E435BF02B276BF100B83C3B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,8 +338,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				3E435BF22B276BF100B83C3B /* Base */,
+				3E7CCAF42B2F7430008520B8 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		3E7CCAF92B2F7902008520B8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E7CCAF82B2F7902008520B8 /* en */,
+				3E7CCAFA2B2F7905008520B8 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -342,6 +359,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -403,6 +421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

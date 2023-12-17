@@ -10,8 +10,12 @@ protocol ViewComponentProtocol: UIView {
     func reloadData(data: Weather?)
 }
 
+enum DataFrom {
+    case network
+    case storage
+}
 protocol MainViewProtocol: AnyObject {
-    func success(dataWeather: Weather?)
+    func success(dataWeather: Weather?,from: DataFrom)
     func failure()
     func presenVC(vc: UIViewController)
 }
@@ -65,7 +69,7 @@ final class MainPresenter: MainViewPresenterProtocol {
                 if let dataWeather = weather {
                     cityDetailVC.reloadData(weatherData: dataWeather)
                 } else  {
-                    
+                
                 }
             }
             
@@ -76,13 +80,12 @@ final class MainPresenter: MainViewPresenterProtocol {
     
     func getWeather() {
         let city = InfoService.getLocation()
-        
         if InfoService.isInternetAvailable() {
             networkService.parseWeather(city: city, days: 10) { [self] weather in
                 if let dataWeather = weather {
                     DataStorageService.shared.removeData(with: DataStorageService.userKey)
                     DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)
-                    view.success(dataWeather: dataWeather)
+                    view.success(dataWeather: dataWeather, from: .network)
                 } else {
                     view.failure()
                 }
@@ -90,7 +93,7 @@ final class MainPresenter: MainViewPresenterProtocol {
         } else {
             DataStorageService.shared.loadData(with: DataStorageService.userKey) { [self] weather in
                 if let loadedWeather = weather {
-                    view.success(dataWeather: loadedWeather)
+                    view.success(dataWeather: loadedWeather, from: .storage)
                 } else {
                     print("Failed to load data")
                 }

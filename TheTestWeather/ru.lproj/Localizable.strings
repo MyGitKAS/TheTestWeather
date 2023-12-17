@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  TheTestWeather
+
+  Created by Aleksey Kuhlenkov on 17.12.23.
+  
+*/
+
+"change_button_text" = "Выбрать город";
+"week_table_title" = "Погода на неделю";
+
+"today_label" = "Сегодня";
+"now_label" = "Сейчас";
+
+"day_mon" = "Пн";
+"day_tue" = "Вт";
+"day_wed" = "Ср";
+"day_thu" = "Чт";
+"day_fri" = "Пт";
+"day_sat" = "Сб";
+"day_sun" = "Вс";
+
+"designation_temp" = "°C";
+
+"min_label" = "Мин";
+"max_label" = "Макс";

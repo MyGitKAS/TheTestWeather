@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  TheTestWeather
+
+  Created by Aleksey Kuhlenkov on 17.12.23.
+  
+*/
+
+"change_button_text" = "Change city";
+"week_table_title" = "Weekly Weather";
+
+"today_label" = "Today";
+"now_label" = "Now";
+
+"day_mon" = "Mon";
+"day_tue" = "Tue";
+"day_wed" = "Wed";
+"day_thu" = "Thu";
+"day_fri" = "Fri";
+"day_sat" = "Sat";
+"day_sun" = "Sun";
+
+"designation_temp" = "°F";
+
+"min_label" = "Min";
+"max_label" = "Max";
