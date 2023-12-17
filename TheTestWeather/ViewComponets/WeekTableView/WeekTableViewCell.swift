@@ -18,6 +18,7 @@ final class WeekTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .clear
         progressView.trackTintColor = .green
         setupLabels()
         setConstraints()

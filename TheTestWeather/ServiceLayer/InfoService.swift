@@ -44,8 +44,12 @@ final class InfoService {
     
     static func getNumberDayWeek() -> Int {
         let calendar = Calendar.current
-        let date = Date()
-        return calendar.component(.weekday, from: date) - 2
+        let components = calendar.dateComponents([.weekday], from: Date())
+        let numbDay = components.weekday
+        if numbDay == 1 {
+            return 6
+        }
+        return (numbDay! - 2)
     }
     
     static func calculateTime(hours: Int) -> Int {
@@ -56,5 +60,13 @@ final class InfoService {
         let hour = calendar.component(.hour, from: futureDate!)
         
         return hour
+    }
+    
+    static func getLanguage() -> String {
+        if let preferredLanguageCode = Locale.preferredLanguages.first {
+            let firstTwoLetters = String(preferredLanguageCode.prefix(2))
+            return firstTwoLetters
+        }
+        return "en"
     }
 }

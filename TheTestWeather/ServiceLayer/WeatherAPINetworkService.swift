@@ -14,13 +14,11 @@ protocol NetworkServiceProtocol {
 
 final class WeatherAPINetworkService: NetworkServiceProtocol {
     
-    private let apiKey = "cbd221c15409491b8e8164754231012"
+    private let apiKey = "a8e86a08015d4435afd152547231612"
     private let baseURL = "https://api.weatherapi.com/v1/forecast.json?key="
     
     func parseWeather(city: String, days: Int = 10, completion: @escaping (Weather?) -> Void) {
-            
             let url = baseURL + apiKey + "&q=\(city)&days=\(days)"
-        
             AF.request(url).responseDecodable(of: Weather.self) { response in
             switch response.result {
             case .success(let weatherResponse):

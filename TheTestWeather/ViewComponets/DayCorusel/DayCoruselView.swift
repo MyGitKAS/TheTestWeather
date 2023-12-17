@@ -59,26 +59,24 @@ extension DayCoruselView: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourCell", for: indexPath) as! HourCell
-        let dataHour = weather?.forecast.forecastday.first?.hour[indexPath.row]
-        var hour = dataHour?.time ?? "--"
-        let iconUrl = dataHour?.condition.icon ?? ""
-        let icon = Service.stringToImage(str: iconUrl) ?? UIImage(named: "naicon")
-        
+        guard let dataHour = weather?.forecast.forecastday.first?.hour[indexPath.row] else { return cell }
+        let locale = InfoService.getLanguage()
+        var hour = dataHour.time
+        let iconUrl = dataHour.condition.icon
+        let iconImage = Service.stringToImage(str: iconUrl) ?? UIImage(named: "naicon")
         if hour != "--" {
             let components = hour.components(separatedBy: " ")
             let timeComponent = components[1].components(separatedBy: ":")
             let futureTime = InfoService.calculateTime(hours: Int(timeComponent[0]) ?? 00)
             hour = String(futureTime)
         }
-        
-        let temperature = dataHour?.tempC ?? 0.0
-        
+        let temperature = locale == "ru" ? dataHour.tempC : dataHour.tempF
         if indexPath.row == 0 {
             hour = "Now"
         }
         cell.hourLabel.text = hour
         cell.tempLabel.text = String(temperature.toInt()) + "°"
-        cell.weatherImage.image = icon
+        cell.weatherImage.image = iconImage
         return cell
     }
 }

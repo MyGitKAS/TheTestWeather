@@ -33,6 +33,7 @@ final class WeekTableView: UIView {
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "WeekTableViewCell")
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
+        tableView.backgroundColor = .clear
     }
     
     private func minMaxWeekTemp() -> (Double, Double) {
@@ -67,26 +68,28 @@ extension WeekTableView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
+        guard let day = weather?.forecast.forecastday[indexPath.row].day else { return cell }
+        
         let numberDay = InfoService.getNumberDayWeek()
         let indexCell = indexPath.row
         var dayWeek = days[(numberDay + indexCell) % 7]
         if indexCell == 0 {
-            dayWeek = "Today"
-           }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
-        let day = weather?.forecast.forecastday[indexPath.row].day
-        let minTempDay = day?.mintempC ?? 0.0
-        let maxTempDay = day?.maxtempC ?? 0.0
-        let iconUrl = day?.condition.icon ?? ""
-        let icon = Service.stringToImage(str: iconUrl) ?? UIImage(named: "naicon")
-        
+                 dayWeek = "Today"
+                }
+        let locale = InfoService.getLanguage()
+       
+        let minTempDay = locale == "ru" ? day.mintempC : day.mintempF
+        let maxTempDay = locale == "ru" ? day.maxtempC : day.maxtempF
+        let iconUrl = day.condition.icon
+        let iconImage = Service.stringToImage(str: iconUrl)
+        //
         cell.progressView.setProgress(abs(Float(maxTempDay + minTempDay)) / 100, animated: true)
-        cell.backgroundColor = UIColor.clear
+        //
         cell.dayLabel.text = dayWeek
-        cell.weatherImageView.image = icon
+        cell.weatherImageView.image = iconImage
         cell.tempMinLabel.text = String(minTempDay.toInt()) + "°"
         cell.tempMaxLabel.text = String(maxTempDay.toInt()) + "°"
-        cell.dayLabel.text = dayWeek
         return cell
     }
 

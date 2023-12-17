@@ -30,7 +30,7 @@ final class CurrentWeatherView: UIView {
         localeLabel.font = UIFont.systemFont(ofSize: 35)
         localeLabel.isWhite()
         
-        currentTemperatureLabel.text = "----"
+        currentTemperatureLabel.text = "---"
         currentTemperatureLabel.font = UIFont.systemFont(ofSize: 80)
         currentTemperatureLabel.isWhite()
         
@@ -38,7 +38,7 @@ final class CurrentWeatherView: UIView {
         weatherLabel.font = UIFont.systemFont(ofSize: 25)
         weatherLabel.isWhite()
         
-        maxMinTempLabel.text = "-----  -----"
+        maxMinTempLabel.text = "----  ----"
         maxMinTempLabel.isWhite()
         
         localeLabel.textAlignment = .center
@@ -54,13 +54,20 @@ final class CurrentWeatherView: UIView {
 }
 
 extension CurrentWeatherView: ViewComponentProtocol {
-    func reloadData(data: Weather?) {
+    func reloadData(data: Weather? ) {
+        let locale = InfoService.getLanguage()
         guard let data = data else { return }
         localeLabel.text = data.location.name
-        currentTemperatureLabel.text = "\(data.current.tempC.toInt())°"
         weatherLabel.text = data.current.condition.text
-        let day = data.forecast.forecastday[0].day
-        maxMinTempLabel.text = "Max.: \(day.maxtempC.toInt())° | Min.: \(day.mintempC.toInt())°"
+        if locale == "ru" {
+            currentTemperatureLabel.text = "\(data.current.tempC.toInt())°C"
+            let day = data.forecast.forecastday[0].day
+            maxMinTempLabel.text = "Max.: \(day.maxtempC.toInt())° | Min.: \(day.mintempC.toInt())°"
+        } else {
+            currentTemperatureLabel.text = "\(data.current.tempF.toInt())°F"
+            let day = data.forecast.forecastday[0].day
+            maxMinTempLabel.text = "Max.: \(day.maxtempF.toInt())° | Min.: \(day.mintempF.toInt())°"
+        }
     }
 }
 

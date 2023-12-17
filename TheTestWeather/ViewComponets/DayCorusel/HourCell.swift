@@ -31,6 +31,10 @@ final class HourCell: UICollectionViewCell {
         tempLabel.font = UIFont.systemFont(ofSize: 20)
         tempLabel.isWhite()
         hourLabel.isWhite()
+        
+        hourLabel.text = "--"
+        tempLabel.text = "--"
+        weatherImage.image = UIImage(named: "naicon")
     }
 }
 

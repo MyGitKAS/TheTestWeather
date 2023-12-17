@@ -68,7 +68,9 @@ extension MainViewController: MainViewProtocol {
     }
     
     func failure() {
-        
+        let alert = UIAlertController(title: "No Internet connection", message: "Check your connection", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
 }
 
@@ -89,12 +91,14 @@ extension MainViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(changeCityButton.snp_bottomMargin).offset(50)
             make.height.equalTo(130)
-            make.width.equalTo(350)
+            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().offset(20)
         }
         weekTable.snp.makeConstraints { make in
             make.top.equalTo(dayCorusel.snp.bottom).offset(10)
-            make.width.equalTo(350)
             make.height.equalTo(330)
+            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().offset(20)
             make.centerX.equalToSuperview()
 
         }

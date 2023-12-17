@@ -53,7 +53,7 @@ struct Astro: Codable {
 struct Day: Codable {
     let maxtempC, maxtempF, mintempC, mintempF: Double
     let avgtempC, avgtempF: Double
-    let totalsnowCM: Double
+    let totalsnowCM: Double?
     let condition: DayCondition
 
     enum CodingKeys: String, CodingKey {

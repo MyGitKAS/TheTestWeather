@@ -81,8 +81,8 @@ final class MainPresenter: MainViewPresenterProtocol {
             networkService.parseWeather(city: city, days: 10) { [self] weather in
                 if let dataWeather = weather {
                     DataStorageService.shared.removeData(with: DataStorageService.userKey)
-                    view.success(dataWeather: dataWeather)
                     DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)
+                    view.success(dataWeather: dataWeather)
                 } else {
                     view.failure()
                 }
