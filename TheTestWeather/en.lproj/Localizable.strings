@@ -24,3 +24,9 @@
 
 "min_label" = "Min";
 "max_label" = "Max";
+
+"last_update_label" = "Last update";
+
+"days_ago_label" = "days ago";
+"hours_ago_label" = "hours ago";
+"min_ago_label" = "min ago";

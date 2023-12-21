@@ -24,3 +24,9 @@
 
 "min_label" = "Мин";
 "max_label" = "Макс";
+
+"last_update_label" = "Последнее обновление";
+
+"days_ago_label" = "дней назад";
+"hours_ago_label" = "часов назад";
+"min_ago_label" = "минут назад";

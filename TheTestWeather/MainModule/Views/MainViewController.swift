@@ -54,7 +54,8 @@ final class MainViewController: UIViewController {
     }
     
     private func showLastUpdateLabel(howLong: String) {
-        lastUpdateLabel.text = "Last update: \(howLong)."
+        let titleLastUpdate = NSLocalizedString("last_update_label", comment: "")
+        lastUpdateLabel.text = "\(titleLastUpdate): \(howLong)."
         lastUpdateLabel.font = UIFont.systemFont(ofSize: 14)
         lastUpdateLabel.textAlignment = .center
         lastUpdateLabel.textColor = .red
@@ -105,7 +106,7 @@ extension MainViewController {
             make.top.equalTo(currentWeather.snp_bottomMargin).offset(30)
         }
         lastUpdateLabel.snp.makeConstraints { make in
-            make.width.equalTo(300)
+            make.width.equalTo(330)
             make.height.equalTo(40)
             make.centerX.equalToSuperview()
             make.top.equalTo(changeCityButton.snp_bottomMargin).offset(15)

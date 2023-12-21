@@ -32,13 +32,16 @@ final class Service {
         let components = calendar.dateComponents([.minute, .hour, .day], from: inputDate, to: currentDate)
       
         if let days = components.day, days > 0 {
-            return "\(days) days"
+            let dayAgoLabel = NSLocalizedString("days_ago_label", comment: "")
+            return "\(days) \(dayAgoLabel)"
         }
         if let hours = components.hour, hours < 24 && hours > 0 {
-            return "\(hours) hours ago"
+            let hoursAgoLabel = NSLocalizedString("hours_ago_label", comment: "")
+            return "\(hours) \(hoursAgoLabel)"
         }
         if let minutes = components.minute, minutes < 60 {
-            return "\(minutes) min ago"
+            let minutesAgoLabel = NSLocalizedString("min_ago_label", comment: "")
+            return "\(minutes) \(minutesAgoLabel)"
         }
         return "Unknow"
     }

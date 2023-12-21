@@ -19,6 +19,7 @@ final class WeatherAPINetworkService: NetworkServiceProtocol {
     
     func parseWeather(city: String, days: Int = 10, completion: @escaping (Weather?) -> Void) {
             let url = baseURL + apiKey + "&q=\(city)&days=\(days)"
+        print(url)
             AF.request(url).responseDecodable(of: Weather.self) { response in
             switch response.result {
             case .success(let weatherResponse):
