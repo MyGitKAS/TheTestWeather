@@ -75,7 +75,7 @@ extension CityDetailViewController: CityDetailViewProtocol{
         let temperature = locale == "ru" ? weatherData.current.tempC : weatherData.current.tempF
         let designationTemp = NSLocalizedString("designation_temp", comment: "")
         currentTemp.text = String(Int(temperature)) + designationTemp
-        let iconUrl = weatherData.forecast.forecastday[0].day.condition.icon
+        let iconUrl = weatherData.current.condition.icon
         self.icon.image = Service.stringToImage(str: iconUrl) ??  UIImage(named: "naicon")
       
     }
