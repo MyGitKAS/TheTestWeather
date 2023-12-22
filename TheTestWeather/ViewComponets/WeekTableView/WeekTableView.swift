@@ -41,28 +41,12 @@ final class WeekTableView: UIView {
         tableView.allowsSelection = false
         tableView.backgroundColor = .clear
     }
-    
-    private func minMaxWeekTemp() -> (Double, Double) {
-        guard let week = weather?.forecast.forecastday else { return (0,0)}
-        var min: Double = 0
-        var max: Double = 0
-        
-        for day in week {
-            if day.day.maxtempC > max {
-                max = day.day.maxtempC
-            }
-            if day.day.mintempC < min {
-                 min = day.day.mintempC
-            }
-        }
-        return (max,min)
-    }
 }
 
 extension WeekTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return days.count + 1
+        return weather?.forecast.forecastday.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -76,7 +60,6 @@ extension WeekTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
         guard let day = weather?.forecast.forecastday[indexPath.row].day else { return cell }
-        
         let numberDay = InfoService.getNumberDayWeek()
         let indexCell = indexPath.row
         var dayWeek = days[(numberDay + indexCell) % 7]

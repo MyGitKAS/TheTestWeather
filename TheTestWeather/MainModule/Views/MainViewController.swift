@@ -36,7 +36,6 @@ final class MainViewController: UIViewController {
     
     private func setupView() {
         lastUpdateLabel.isExclusiveTouch = true
-        view.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         view.addSubview(currentWeather)
         view.addSubview(changeCityButton)
         view.addSubview(dayCorusel)
@@ -63,7 +62,13 @@ final class MainViewController: UIViewController {
     }
 
     @objc func changeCityButtonTapped() {
+        if InfoService.isInternetAvailable(){
         presenter.changeCityButtonTapped()
+        } else {
+            let alert = UIAlertController(title: "No Internet connection,try later ", message: "Check your connection", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
     }
 }
 

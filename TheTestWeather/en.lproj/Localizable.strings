@@ -30,3 +30,5 @@
 "days_ago_label" = "days ago";
 "hours_ago_label" = "hours ago";
 "min_ago_label" = "min ago";
+
+"back_button" = "Back";

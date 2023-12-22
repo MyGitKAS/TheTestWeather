@@ -27,7 +27,7 @@ protocol MainViewPresenterProtocol: AnyObject {
          cityDetailVC: CityDetailViewProtocol
     )
     func getWeather()
-    var weater: Weather? { get }
+    var weather: Weather? { get }
     func changeCityButtonTapped()
     func citySelected(city: String)
    
@@ -37,7 +37,7 @@ final class MainPresenter: MainViewPresenterProtocol {
         
     private let view: MainViewProtocol!
     private let networkService: NetworkServiceProtocol!
-    internal var weater: Weather?
+    internal var weather: Weather?
     private let chooseCityVC: ChooseCityViewController!
     private let cityDetailVC : CityDetailViewProtocol!
     
@@ -66,11 +66,8 @@ final class MainPresenter: MainViewPresenterProtocol {
     func getOneCity(city: String) {
         if InfoService.isInternetAvailable() {
             networkService.parseWeather(city: city, days: 1) { [self] weather in
-                if let dataWeather = weather {
-                    cityDetailVC.reloadData(weatherData: dataWeather)
-                } else  {
-                
-                }
+                guard let dataWeather = weather else { return }
+                cityDetailVC.reloadData(weatherData: dataWeather)
             }
             
         } else {
@@ -81,11 +78,12 @@ final class MainPresenter: MainViewPresenterProtocol {
     func getWeather() {
         let city = InfoService.getLocation()
         if InfoService.isInternetAvailable() {
-            networkService.parseWeather(city: city, days: 10) { [self] weather in
+            networkService.parseWeather(city: city, days: 7) { [self] weather in
                 if let dataWeather = weather {
                     DataStorageService.shared.removeData(with: DataStorageService.userKey)
                     DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)
                     view.success(dataWeather: dataWeather, from: .network)
+                    }
                 } else {
                     view.failure()
                 }

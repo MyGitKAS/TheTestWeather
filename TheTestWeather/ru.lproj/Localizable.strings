@@ -30,3 +30,5 @@
 "days_ago_label" = "дней назад";
 "hours_ago_label" = "часов назад";
 "min_ago_label" = "минут назад";
+
+"back_button" = "Назад";
