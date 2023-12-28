@@ -83,7 +83,6 @@ final class MainPresenter: MainViewPresenterProtocol {
                     DataStorageService.shared.removeData(with: DataStorageService.userKey)
                     DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)
                     view.success(dataWeather: dataWeather, from: .network)
-                  
                 } else {
                     view.failure()
                 }

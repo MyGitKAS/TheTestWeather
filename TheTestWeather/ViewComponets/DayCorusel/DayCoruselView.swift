@@ -59,24 +59,28 @@ extension DayCoruselView: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourCell", for: indexPath) as! HourCell
-        guard let dataHour = weather?.forecast.forecastday.first?.hour[indexPath.row] else { return cell }
+        
+        guard let days = weather?.forecast.forecastday else { return cell }
+        
         let locale = InfoService.getLanguage()
-        var hour = dataHour.time
-        let iconUrl = dataHour.condition.icon
-        let iconImage = Service.stringToImage(str: iconUrl) ?? UIImage(named: "naicon")
-        if hour != "--" {
-            let components = hour.components(separatedBy: " ")
-            let timeComponent = components[1].components(separatedBy: ":")
-            let futureTime = InfoService.getHourSequence(from: Int(timeComponent[0]) ?? 00)
-            hour = String(futureTime)
-        }
+        let currentHour = InfoService.currentHour()
+        
+        let dayNumber = (currentHour + indexPath.row) / 24
+        let hourNumber = (currentHour + indexPath.row) % 24
+        var hourNumberString = String(hourNumber)
+        let dataHour = days[dayNumber].hour[hourNumber]
+        let iconURL = days[dayNumber].hour[hourNumber].condition.icon
+        let iconImage2 = Service.stringToImage(str: iconURL) ?? UIImage(named: "naicon")
+        
         let temperature = locale == "ru" ? dataHour.tempC : dataHour.tempF
+        
         if indexPath.row == 0 {
-            hour = NSLocalizedString("now_label", comment: "")
+            hourNumberString = NSLocalizedString("now_label", comment: "")
         }
-        cell.hourLabel.text = hour
+            
+        cell.hourLabel.text = hourNumberString
         cell.tempLabel.text = String(temperature.toInt()) + "°"
-        cell.weatherImage.image = iconImage
+        cell.weatherImage.image = iconImage2
         return cell
     }
 }
@@ -87,4 +91,5 @@ extension DayCoruselView: ViewComponentProtocol {
         collectionView.reloadData()
     }
 }
+
 

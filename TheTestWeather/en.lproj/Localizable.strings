@@ -11,6 +11,7 @@
 
 "today_label" = "Today";
 "now_label" = "Now";
+"next_label" = "Next Day";
 
 "day_mon" = "Mon";
 "day_tue" = "Tue";

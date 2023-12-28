@@ -52,14 +52,6 @@ final class InfoService {
         return (numbDay! - 2)
     }
 
-    static func getHourSequence(from hours: Int) -> Int {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        let futureDate = calendar.date(byAdding: .hour, value: hours, to: currentDate)
-        let hour = calendar.component(.hour, from: futureDate!)
-        return hour
-    }
-    
     static func getLanguage() -> String {
         if let preferredLanguageCode = Locale.preferredLanguages.first {
             let firstTwoLetters = String(preferredLanguageCode.prefix(2))
@@ -68,5 +60,10 @@ final class InfoService {
         return "en"
     }
     
-    
+   static func currentHour() -> Int {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: currentDate)
+        return currentHour
+    }
 }

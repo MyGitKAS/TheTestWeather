@@ -11,6 +11,7 @@
 
 "today_label" = "Сегодня";
 "now_label" = "Сейчас";
+"next_label" = "Следующий день";
 
 "day_mon" = "Пн";
 "day_tue" = "Вт";
