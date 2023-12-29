@@ -4,6 +4,7 @@
 //
 //  Created by Aleksey Kuhlenkov on 11.12.23.
 //
+
 import UIKit
 
 protocol ViewComponentProtocol: UIView {
@@ -26,6 +27,7 @@ protocol MainViewPresenterProtocol: AnyObject {
          networkServise: NetworkServiceProtocol,
          cityDetailVC: CityDetailViewProtocol
     )
+    
     func getWeather()
     var weather: Weather? { get }
     func changeCityButtonTapped()
@@ -34,10 +36,11 @@ protocol MainViewPresenterProtocol: AnyObject {
 }
 
 final class MainPresenter: MainViewPresenterProtocol {
-        
+    
+    internal var weather: Weather?
     private let view: MainViewProtocol!
     private let networkService: NetworkServiceProtocol!
-    internal var weather: Weather?
+    private var currentLocation: CurrentLocation?
     private let chooseCityVC: ChooseCityViewController!
     private let cityDetailVC : CityDetailViewProtocol!
     
@@ -49,7 +52,15 @@ final class MainPresenter: MainViewPresenterProtocol {
         self.networkService = networkServise
         self.chooseCityVC = chooseCityVC
         self.cityDetailVC = cityDetailVC
-        getWeather()
+        getCurrentLocationWeather()
+    }
+    
+    private func getCurrentLocationWeather() {
+        LocationService.shared.requestLocation { [weak self] location in
+            guard location != nil else { self?.currentLocation = CurrentLocation(lat: 53.893009, lon: 27.567444); return }
+            self?.currentLocation = CurrentLocation(lat: location!.lat, lon: location!.lon )
+            self?.getWeather()
+        }
     }
     
     func changeCityButtonTapped() {
@@ -74,11 +85,10 @@ final class MainPresenter: MainViewPresenterProtocol {
             print("No internet")
         }
     }
-    
+
     func getWeather() {
-        let city = InfoService.getLocation()
         if InfoService.isInternetAvailable() {
-            networkService.parseWeather(city: city, days: 7) { [self] weather in
+            networkService.parseWeatherLatLon(location: currentLocation!, days: 7) { [self] weather in
                 if let dataWeather = weather {
                     DataStorageService.shared.removeData(with: DataStorageService.userKey)
                     DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)

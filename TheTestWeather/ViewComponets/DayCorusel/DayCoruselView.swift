@@ -63,10 +63,11 @@ extension DayCoruselView: UICollectionViewDataSource {
         guard let days = weather?.forecast.forecastday else { return cell }
         
         let locale = InfoService.getLanguage()
-        let currentHour = InfoService.currentHour()
+        let currentHour = InfoService.getCurrentHour()
         
         let dayNumber = (currentHour + indexPath.row) / 24
         let hourNumber = (currentHour + indexPath.row) % 24
+        
         var hourNumberString = String(hourNumber)
         let dataHour = days[dayNumber].hour[hourNumber]
         let iconURL = days[dayNumber].hour[hourNumber].condition.icon

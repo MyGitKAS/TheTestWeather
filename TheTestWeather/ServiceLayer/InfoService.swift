@@ -7,14 +7,9 @@
 
 import UIKit
 import SystemConfiguration
-//import CoreLocation
 
 final class InfoService {
-    
-    static  func getLocation() -> String {
-        return "Minsk"
-    }
-    
+
     static func getCurrentDayOfWeek() -> String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -60,7 +55,7 @@ final class InfoService {
         return "en"
     }
     
-   static func currentHour() -> Int {
+   static func getCurrentHour() -> Int {
         let currentDate = Date()
         let calendar = Calendar.current
         let currentHour = calendar.component(.hour, from: currentDate)

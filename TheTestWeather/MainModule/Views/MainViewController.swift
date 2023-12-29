@@ -16,7 +16,7 @@ final class MainViewController: UIViewController {
     var weekTable: ViewComponentProtocol!
     lazy var lastUpdateLabel = UILabel()
     private let changeCityButton = UIButton(type: .roundedRect)
-   
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -24,7 +24,6 @@ final class MainViewController: UIViewController {
         setupChangeCityButton()
         setGradient()
     }
-    
     private func setGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -73,6 +72,7 @@ final class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainViewProtocol {
+        
     func presenVC(vc: UIViewController) {
          present(vc, animated: true)
     }
