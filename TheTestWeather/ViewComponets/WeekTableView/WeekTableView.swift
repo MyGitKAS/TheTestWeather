@@ -22,7 +22,6 @@ final class WeekTableView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.clear
         setupTableView()
         setConstraints()
     }
@@ -33,6 +32,7 @@ final class WeekTableView: UIView {
     
     private func setupTableView() {
         self.addSubview(tableView)
+        self.backgroundColor = UIColor.clear
         tableView.layer.cornerRadius = 20
         tableView.dataSource = self
         tableView.delegate = self

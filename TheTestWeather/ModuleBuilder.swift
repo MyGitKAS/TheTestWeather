@@ -18,7 +18,11 @@ class ModuleBuilder: Builder {
         let networkServise = WeatherAPINetworkService()
         let chooseCityVC = ChooseCityViewController()
         let cityDetailVC = CityDetailViewController()
-        let presenter = MainPresenter(view: view,chooseCityVC: chooseCityVC , networkServise: networkServise, cityDetailVC: cityDetailVC)
+        let presenter = MainPresenter(
+            view: view,
+            chooseCityVC: chooseCityVC ,
+            networkServise: networkServise,
+            cityDetailVC: cityDetailVC)
         let currentWeatherView = CurrentWeatherView()
         let dayCoruselView = DayCoruselView()
         let weekTableView = WeekTableView()

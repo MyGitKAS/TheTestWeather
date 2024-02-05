@@ -55,13 +55,13 @@ final class CurrentWeatherView: UIView {
 
 extension CurrentWeatherView: ViewComponentProtocol {
     func reloadData(data: Weather? ) {
-        let locale = InfoService.getLanguage()
+        let localeLanguage = InfoService.getLanguage()
         guard let data = data else { return }
         localeLabel.text = data.location.name
         weatherLabel.text = data.current.condition.text
         let maxText = NSLocalizedString("max_label", comment: "")
         let minText = NSLocalizedString("min_label", comment: "")
-        if locale == "ru" {
+        if localeLanguage == "ru" {
             currentTemperatureLabel.text = "\(data.current.tempC.toInt())°C"
             let day = data.forecast.forecastday[0].day
             maxMinTempLabel.text = "\(maxText).: \(day.maxtempC.toInt())° | \(minText).: \(day.mintempC.toInt())°"

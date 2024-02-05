@@ -15,7 +15,7 @@ final class ChooseCityViewController: UIViewController {
     var presenter: MainViewPresenterProtocol!
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
-    private let buttonEmpty = UIButton()
+    private let buttonBackTopBackground = UIButton()
     private var isSearching = false
 
     private let cityArray = [ "Minsk","Amsterdam","Tokio","Bangkok","London",
@@ -29,14 +29,14 @@ final class ChooseCityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchBar()
-        setupButtonEmpty()
+        setupButtonBackTopBackground()
         setupTableView()
     }
     
-    private func setupButtonEmpty() {
-        view.addSubview(buttonEmpty)
-        buttonEmpty.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 200)
-        buttonEmpty.addTarget(self, action: #selector(buttonTouch), for: .touchUpInside)
+    private func setupButtonBackTopBackground() {
+        view.addSubview(buttonBackTopBackground)
+        buttonBackTopBackground.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 200)
+        buttonBackTopBackground.addTarget(self, action: #selector(buttonTouch), for: .touchUpInside)
     }
     
     private func setupTableView() {

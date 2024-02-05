@@ -24,6 +24,7 @@ final class MainViewController: UIViewController {
         setupChangeCityButton()
         setGradient()
     }
+    
     private func setGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds

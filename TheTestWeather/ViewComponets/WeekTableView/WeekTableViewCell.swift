@@ -18,14 +18,18 @@ final class WeekTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
-        progressView.trackTintColor = .green
+        setupView()
         setupLabels()
         setConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    private func setupView() {
+        backgroundColor = .clear
+        progressView.trackTintColor = .green
     }
     
     private func setupLabels() {
@@ -62,8 +66,7 @@ extension WeekTableViewCell {
             progressView.snp.makeConstraints { make in
                 make.centerY.equalTo(self)
                 make.trailing.equalTo(self.snp.trailing).offset(-65)
-                make.width.equalTo(70)
-    
+                make.width.equalTo(80)
             }
         
             tempMaxLabel.snp.makeConstraints { make in

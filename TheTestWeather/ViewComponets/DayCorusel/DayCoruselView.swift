@@ -61,7 +61,6 @@ extension DayCoruselView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourCell", for: indexPath) as! HourCell
         
         guard let days = weather?.forecast.forecastday else { return cell }
-        
         let locale = InfoService.getLanguage()
         let currentHour = InfoService.getCurrentHour()
         

@@ -20,9 +20,13 @@ class CityDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemIndigo
+        setupView()
         setupComponents()
         setConstraints()
+    }
+    
+    private func setupView() {
+        view.backgroundColor = .systemIndigo
     }
     
     private func setupComponents() {
