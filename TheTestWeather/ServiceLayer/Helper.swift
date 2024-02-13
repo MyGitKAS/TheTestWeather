@@ -8,7 +8,7 @@
 import UIKit
 import SystemConfiguration
 
-final class InfoService {
+final class Helper {
 
     static func getCurrentDayOfWeek() -> String {
         let currentDate = Date()
@@ -60,5 +60,59 @@ final class InfoService {
         let calendar = Calendar.current
         let currentHour = calendar.component(.hour, from: currentDate)
         return currentHour
+    }
+    
+    static func calculateCurrentWeekTemperature(weather: Weather) -> (min: Float, max: Float) {
+        var min: Float = 0
+        var max: Float = 0
+        let weakWeather = weather.forecast.forecastday
+        for day in weakWeather {
+            if day.day.mintempC < min {
+                min = day.day.maxtempC
+            }
+            
+            if day.day.maxtempC > max {
+                max = day.day.maxtempC
+            }
+        }
+        return (min,max)
+    }
+    
+    static func stringToImage(str: String) -> UIImage? {
+       let stringUrl = "https:" + str
+        guard let url = URL(string: stringUrl),
+              let data = try? Data(contentsOf: url),
+              let image = UIImage(data: data) else {
+            return UIImage(named: "naicon")
+        }
+        return image
+    }
+    
+  static func calculateDataAge(from dateString: String) -> String {
+        let dateFormat = "yyyy-MM-dd HH:mm"
+        let currentDate = Date()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        guard let inputDate = dateFormatter.date(from: dateString) else {
+            return "No date"
+        }
+        let calendar = Calendar.current
+        
+        let components = calendar.dateComponents([.minute, .hour, .day], from: inputDate, to: currentDate)
+      
+        if let days = components.day, days > 0 {
+            let dayAgoLabel = NSLocalizedString("days_ago_label", comment: "")
+            return "\(days) \(dayAgoLabel)"
+        }
+        if let hours = components.hour, hours < 24 && hours > 0 {
+            let hoursAgoLabel = NSLocalizedString("hours_ago_label", comment: "")
+            return "\(hours) \(hoursAgoLabel)"
+        }
+        if let minutes = components.minute, minutes < 60 {
+            let minutesAgoLabel = NSLocalizedString("min_ago_label", comment: "")
+            return "\(minutes) \(minutesAgoLabel)"
+        }
+        return "Unknow"
     }
 }

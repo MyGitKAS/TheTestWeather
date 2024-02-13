@@ -15,8 +15,9 @@ enum DataFrom {
     case network
     case storage
 }
+
 protocol MainViewProtocol: AnyObject {
-    func success(dataWeather: Weather?,from: DataFrom)
+    func success(dataWeather: Weather?,from: DataFrom, WeekDifferentTemp: (Float, Float))
     func failure()
     func presenVC(vc: UIViewController)
 }
@@ -73,33 +74,30 @@ final class MainPresenter: MainViewPresenterProtocol {
     }
     
     func getOneCity(city: String) {
-        if InfoService.isInternetAvailable() {
+        if Helper.isInternetAvailable() {
             networkService.parseWeatherName(city: city, days: 1) { [self] weather in
                 guard let dataWeather = weather else { return }
                 cityDetailVC.reloadData(weatherData: dataWeather)
             }
-            
-        } else {
-            print("No internet")
         }
     }
 
     func getWeather() {
-        if InfoService.isInternetAvailable() {
-            let localeLanguage = InfoService.getLanguage()
+        if Helper.isInternetAvailable() {
+            let localeLanguage = Helper.getLanguage()
             networkService.parseWeatherLatLon(location: currentLocation!, days: 7, lang: localeLanguage) { [self] weather in
                 if let dataWeather = weather {
                     DataStorageService.shared.removeData(with: DataStorageService.userKey)
                     DataStorageService.shared.saveData(with: DataStorageService.userKey, value: dataWeather)
-                    view.success(dataWeather: dataWeather, from: .network)
-                } else {
-                    view.failure()
+                    let weekDifferentTemp = Helper.calculateCurrentWeekTemperature(weather: dataWeather)
+                    view.success(dataWeather: dataWeather, from: .network, WeekDifferentTemp: weekDifferentTemp)
                 }
             }
         } else {
             DataStorageService.shared.loadData(with: DataStorageService.userKey) { [self] weather in
                 if let loadedWeather = weather {
-                    view.success(dataWeather: loadedWeather, from: .storage)
+                    let weekDifferentTemp = Helper.calculateCurrentWeekTemperature(weather: loadedWeather)
+                    view.success(dataWeather: loadedWeather, from: .storage, WeekDifferentTemp: weekDifferentTemp)
                 } else {
                     print("Failed to load data")
                 }

@@ -61,8 +61,8 @@ extension DayCoruselView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourCell", for: indexPath) as! HourCell
         
         guard let days = weather?.forecast.forecastday else { return cell }
-        let locale = InfoService.getLanguage()
-        let currentHour = InfoService.getCurrentHour()
+        let locale = Helper.getLanguage()
+        let currentHour = Helper.getCurrentHour()
         
         let dayNumber = (currentHour + indexPath.row) / 24
         let hourNumber = (currentHour + indexPath.row) % 24
@@ -70,7 +70,7 @@ extension DayCoruselView: UICollectionViewDataSource {
         var hourNumberString = String(hourNumber)
         let dataHour = days[dayNumber].hour[hourNumber]
         let iconURL = days[dayNumber].hour[hourNumber].condition.icon
-        let iconImage2 = Service.stringToImage(str: iconURL) ?? UIImage(named: "naicon")
+        let iconImage2 = Helper.stringToImage(str: iconURL) ?? UIImage(named: "naicon")
         
         let temperature = locale == "ru" ? dataHour.tempC : dataHour.tempF
         

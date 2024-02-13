@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Double {
+extension Float {
     func toInt() -> Int {
         Int(self)
     }

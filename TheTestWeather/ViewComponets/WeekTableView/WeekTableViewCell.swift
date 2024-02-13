@@ -14,7 +14,7 @@ final class WeekTableViewCell: UITableViewCell {
     var tempMaxLabel = UILabel()
     var tempMinLabel = UILabel()
     var weatherImageView = UIImageView()
-    let progressView = UIProgressView()
+    let scaleView = WeatherScaleView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,7 +29,6 @@ final class WeekTableViewCell: UITableViewCell {
     
     private func setupView() {
         backgroundColor = .clear
-        progressView.trackTintColor = .green
     }
     
     private func setupLabels() {
@@ -37,7 +36,7 @@ final class WeekTableViewCell: UITableViewCell {
         addSubview(tempMaxLabel)
         addSubview(tempMinLabel)
         addSubview(weatherImageView)
-        addSubview(progressView)
+        addSubview(scaleView)
         
         tempMaxLabel.isWhite()
         tempMinLabel.isWhite()
@@ -55,18 +54,19 @@ extension WeekTableViewCell {
             weatherImageView.snp.makeConstraints { make in
                 make.centerY.equalTo(self)
                 make.height.width.equalTo(40)
-                make.trailing.equalTo(progressView.snp.leading).offset(-60)
+                make.trailing.equalTo(scaleView.snp.leading).offset(-60)
             }
         
             tempMinLabel.snp.makeConstraints { make in
                 make.centerY.equalTo(self)
-                make.trailing.equalTo(progressView.snp.leading).offset(-15)
+                make.trailing.equalTo(scaleView.snp.leading).offset(-15)
             }
         
-            progressView.snp.makeConstraints { make in
+            scaleView.snp.makeConstraints { make in
                 make.centerY.equalTo(self)
                 make.trailing.equalTo(self.snp.trailing).offset(-65)
                 make.width.equalTo(80)
+                make.height.equalTo(scaleView.frame.width)
             }
         
             tempMaxLabel.snp.makeConstraints { make in

@@ -75,12 +75,12 @@ extension CityDetailViewController {
 
 extension CityDetailViewController: CityDetailViewProtocol{
     func reloadData(weatherData: Weather) {
-        let locale = InfoService.getLanguage()
+        let locale = Helper.getLanguage()
         let temperature = locale == "ru" ? weatherData.current.tempC : weatherData.current.tempF
         let designationTemp = NSLocalizedString("designation_temp", comment: "")
         currentTemp.text = String(Int(temperature)) + designationTemp
         let iconUrl = weatherData.current.condition.icon
-        self.icon.image = Service.stringToImage(str: iconUrl) ??  UIImage(named: "naicon")
+        self.icon.image = Helper.stringToImage(str: iconUrl) ??  UIImage(named: "naicon")
       
     }
 }

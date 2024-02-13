@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol WeekTableViewProtocol: ViewComponentProtocol {
+    var WeekdifferentTemp: (Float, Float)? { get set }
+}
+
 final class WeekTableView: UIView {
-    
+
+    var WeekdifferentTemp: (Float, Float)?
     private let tableView = UITableView()
     private var weather: Weather?
     private  let days = [NSLocalizedString("day_mon", comment: ""),
@@ -35,7 +40,6 @@ final class WeekTableView: UIView {
         self.backgroundColor = UIColor.clear
         tableView.layer.cornerRadius = 20
         tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "WeekTableViewCell")
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
@@ -59,22 +63,28 @@ extension WeekTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
-        guard let day = weather?.forecast.forecastday[indexPath.row].day else { return cell }
-        let numberDay = InfoService.getNumberDayWeek()
+        guard let weather = weather else { return cell }
+        let day = weather.forecast.forecastday[indexPath.row].day
+        let numberDay = Helper.getNumberDayWeek()
         let indexCell = indexPath.row
         var dayWeek = days[(numberDay + indexCell) % 7]
-        if indexCell == 0 {
-                 dayWeek = NSLocalizedString("today_label", comment: "")
-                }
-        let locale = InfoService.getLanguage()
+        let locale = Helper.getLanguage()
        
         let minTempDay = locale == "ru" ? day.mintempC : day.mintempF
         let maxTempDay = locale == "ru" ? day.maxtempC : day.maxtempF
         let iconUrl = day.condition.icon
-        let iconImage = Service.stringToImage(str: iconUrl)
-       
-        cell.progressView.setProgress(abs(Float(maxTempDay + minTempDay)) / 10, animated: true)
-       
+        let iconImage = Helper.stringToImage(str: iconUrl)
+        
+        let minWeek = WeekdifferentTemp?.0 ?? 0
+        let maxWeek = WeekdifferentTemp?.1 ?? 0
+        
+        if indexCell == 0 {
+                 dayWeek = NSLocalizedString("today_label", comment: "")
+            cell.scaleView.setParametrs(minWeek: minWeek, maxWeek: maxWeek, minDay: minTempDay, maxDay: maxTempDay, current: (weather.current.tempC))
+        } else {
+            cell.scaleView.setParametrs(minWeek: minWeek, maxWeek: maxWeek, minDay: minTempDay, maxDay: maxTempDay)
+        }
+
         cell.dayLabel.text = dayWeek
         cell.weatherImageView.image = iconImage
         cell.tempMinLabel.text = String(minTempDay.toInt()) + "°"
@@ -95,9 +105,8 @@ extension WeekTableView: UITableViewDataSource {
     }
 }
 
-extension WeekTableView: UITableViewDelegate {}
 
-extension WeekTableView: ViewComponentProtocol {
+extension WeekTableView: WeekTableViewProtocol {
     func reloadData(data: Weather?) {
        weather = data
        tableView.reloadData()

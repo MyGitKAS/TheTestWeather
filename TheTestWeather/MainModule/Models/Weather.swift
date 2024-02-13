@@ -17,9 +17,9 @@ struct Weather: Codable {
 struct Current: Codable {
     let lastUpdatedEpoch: Double
     let lastUpdated: String
-    let tempC: Double
-    let tempF: Double
-    let isDay: Double
+    let tempC: Float
+    let tempF: Float
+    let isDay: Float
     let condition: CurrentCondition
 
     enum CodingKeys: String, CodingKey {
@@ -51,9 +51,9 @@ struct Astro: Codable {
 }
 // MARK: - Day
 struct Day: Codable {
-    let maxtempC, maxtempF, mintempC, mintempF: Double
-    let avgtempC, avgtempF: Double
-    let totalsnowCM: Double?
+    let maxtempC, maxtempF, mintempC, mintempF: Float
+    let avgtempC, avgtempF: Float
+    let totalsnowCM: Float?
     let condition: DayCondition
 
     enum CodingKeys: String, CodingKey {
@@ -70,13 +70,13 @@ struct Day: Codable {
 // MARK: - DayCondition
 struct DayCondition: Codable {
     let text, icon: String
-    let code: Double
+    let code: Float
 }
 // MARK: - Hour
 struct Hour: Codable {
     let time: String
-    let tempC, tempF: Double
-    let isDay: Double
+    let tempC, tempF: Float
+    let isDay: Float
     let condition: CurrentCondition
 
     enum CodingKeys: String, CodingKey {
@@ -90,9 +90,9 @@ struct Hour: Codable {
 // MARK: - Location
 struct Location: Codable {
     let name, region, country: String
-    let lat, lon: Double
+    let lat, lon: Float
     let tzID: String
-    let localtimeEpoch: Double
+    let localtimeEpoch: Float
     let localtime: String
 
     enum CodingKeys: String, CodingKey {

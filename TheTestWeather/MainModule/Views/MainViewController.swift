@@ -13,7 +13,7 @@ final class MainViewController: UIViewController {
     var presenter: MainViewPresenterProtocol!
     var currentWeather: ViewComponentProtocol!
     var dayCorusel: ViewComponentProtocol!
-    var weekTable: ViewComponentProtocol!
+    var weekTable: WeekTableViewProtocol!
     lazy var lastUpdateLabel = UILabel()
     private let changeCityButton = UIButton(type: .roundedRect)
   
@@ -62,7 +62,7 @@ final class MainViewController: UIViewController {
     }
 
     @objc func changeCityButtonTapped() {
-        if InfoService.isInternetAvailable(){
+        if Helper.isInternetAvailable(){
         presenter.changeCityButtonTapped()
         } else {
             let alert = UIAlertController(title: "No Internet connection,try later ", message: "Check your connection", preferredStyle: .alert)
@@ -73,22 +73,20 @@ final class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainViewProtocol {
-        
-    func presenVC(vc: UIViewController) {
-         present(vc, animated: true)
-    }
-    
-    func success(dataWeather: Weather?, from: DataFrom) {
+    func success(dataWeather: Weather?, from: DataFrom, WeekDifferentTemp: (Float, Float)) {
         currentWeather.reloadData(data: dataWeather)
         dayCorusel.reloadData(data: dataWeather)
         weekTable.reloadData(data: dataWeather)
-        
+        weekTable.WeekdifferentTemp = WeekDifferentTemp
         guard from == .storage else { return }
         guard let data = dataWeather else { return }
         let lastUpdate = data.current.lastUpdated
-        let dataAge = Service.calculateDataAge(from: lastUpdate)
+        let dataAge = Helper.calculateDataAge(from: lastUpdate)
         showLastUpdateLabel(howLong: dataAge)
-        
+    }
+    
+    func presenVC(vc: UIViewController) {
+         present(vc, animated: true)
     }
     
     func failure() {

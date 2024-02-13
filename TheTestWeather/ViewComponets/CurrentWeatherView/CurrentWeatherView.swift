@@ -55,7 +55,7 @@ final class CurrentWeatherView: UIView {
 
 extension CurrentWeatherView: ViewComponentProtocol {
     func reloadData(data: Weather? ) {
-        let localeLanguage = InfoService.getLanguage()
+        let localeLanguage = Helper.getLanguage()
         guard let data = data else { return }
         localeLabel.text = data.location.name
         weatherLabel.text = data.current.condition.text
