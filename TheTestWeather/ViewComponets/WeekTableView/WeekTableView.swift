@@ -40,6 +40,7 @@ final class WeekTableView: UIView {
         self.backgroundColor = UIColor.clear
         tableView.layer.cornerRadius = 20
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "WeekTableViewCell")
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
@@ -47,20 +48,24 @@ final class WeekTableView: UIView {
     }
 }
 
-extension WeekTableView: UITableViewDataSource {
-    
+extension WeekTableView: UITableViewDataSource, UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weather?.forecast.forecastday.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         if let textlabel = header.textLabel {
-            textlabel.font = textlabel.font.withSize(15)
-            textlabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            textlabel.font = textlabel.font.withSize(20)
+            textlabel.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeekTableViewCell", for: indexPath) as! WeekTableViewCell
         guard let weather = weather else { return cell }
@@ -97,14 +102,13 @@ extension WeekTableView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-       tableView.backgroundColor = #colorLiteral(red: 0.1938996013, green: 0.3328887908, blue: 0.3157452245, alpha: 0.1990463361)
+        tableView.backgroundColor = #colorLiteral(red: 0.1938996013, green: 0.3328887908, blue: 0.3157452245, alpha: 0.1990463361)
    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
 }
-
 
 extension WeekTableView: WeekTableViewProtocol {
     func reloadData(data: Weather?) {
