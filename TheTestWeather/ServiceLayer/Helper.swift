@@ -66,6 +66,19 @@ final class Helper {
         var min: Float = 0
         var max: Float = 0
         let weakWeather = weather.forecast.forecastday
+        
+        if getLanguage() == "en" {
+            for day in weakWeather {
+                if day.day.mintempF < min {
+                    min = day.day.maxtempF
+                }
+                
+                if day.day.maxtempF > max {
+                    max = day.day.maxtempF
+                }
+            }
+        }
+        
         for day in weakWeather {
             if day.day.mintempC < min {
                 min = day.day.maxtempC

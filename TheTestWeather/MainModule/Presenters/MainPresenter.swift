@@ -37,11 +37,11 @@ protocol MainViewPresenterProtocol: AnyObject {
 
 final class MainPresenter: MainViewPresenterProtocol {
     
-    private let view: MainViewProtocol!
+    weak private var view: MainViewProtocol!
+    weak private var chooseCityVC: ChooseCityViewController!
+    weak private var cityDetailVC: CityDetailViewProtocol!
     private let networkService: NetworkServiceProtocol!
     private var currentLocation: CurrentLocation?
-    private let chooseCityVC: ChooseCityViewController!
-    private let cityDetailVC : CityDetailViewProtocol!
     
     required init(view: MainViewProtocol,
                   chooseCityVC: ChooseCityViewController,

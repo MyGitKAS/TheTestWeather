@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol CityDetailViewProtocol {
+protocol CityDetailViewProtocol: class {
     func reloadData(weatherData: Weather)
 }
 

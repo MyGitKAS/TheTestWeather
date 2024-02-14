@@ -77,6 +77,7 @@ extension WeekTableView: UITableViewDataSource, UITableViewDelegate {
        
         let minTempDay = locale == "ru" ? day.mintempC : day.mintempF
         let maxTempDay = locale == "ru" ? day.maxtempC : day.maxtempF
+        let currentTemp = locale == "ru" ? weather.current.tempC : weather.current.tempF
         let iconUrl = day.condition.icon
         let iconImage = Helper.stringToImage(str: iconUrl)
         
@@ -85,7 +86,7 @@ extension WeekTableView: UITableViewDataSource, UITableViewDelegate {
         
         if indexCell == 0 {
                  dayWeek = NSLocalizedString("today_label", comment: "")
-            cell.scaleView.setParametrs(minWeek: minWeek, maxWeek: maxWeek, minDay: minTempDay, maxDay: maxTempDay, current: (weather.current.tempC))
+            cell.scaleView.setParametrs(minWeek: minWeek, maxWeek: maxWeek, minDay: minTempDay, maxDay: maxTempDay, current: (currentTemp))
         } else {
             cell.scaleView.setParametrs(minWeek: minWeek, maxWeek: maxWeek, minDay: minTempDay, maxDay: maxTempDay)
         }

@@ -10,10 +10,10 @@ import SnapKit
 
 final class CurrentWeatherView: UIView {
 
-    let localeLabel = UILabel()
-    let currentTemperatureLabel = UILabel()
-    let weatherLabel = UILabel()
-    let maxMinTempLabel = UILabel()
+    private let localeLabel = UILabel()
+    private let currentTemperatureLabel = UILabel()
+    private let weatherLabel = UILabel()
+    private let maxMinTempLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
